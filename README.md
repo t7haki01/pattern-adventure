@@ -1,1 +1,1 @@
-"# pattern-adventure" 
+"# pattern-adventure demo"
