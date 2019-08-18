@@ -2,8 +2,8 @@ var express = require('express');
 var router = express.Router();
 var accounts = require('../models/account');
 
-router.get('/getid/:account?', function(req, res, next) {
-  accounts.getIdByAccount(req.params.account, function(err, rows) {
+router.get('/getid/:email?', function(req, res, next) {
+  accounts.getIdByEmail(req.params.email, function(err, rows) {
     if (err) {
       res.json(err);
     } else {

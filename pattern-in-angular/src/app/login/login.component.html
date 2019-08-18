@@ -13,7 +13,7 @@
   <body>
   <div class="container-fluid ">
       <nav class="navbar navbar-expand-lg navbar-light  ">
-        <div class="logo "><a class="navbar-brand " href="#"> <img src="../../assets/images/logo black_no website.svg" class="" width="175"  alt=""></a></div>
+        <div class="logo "><a class="navbar-brand" routerLink="/"> <img src="../../assets/images/logo black_no website.svg" class="" width="175"  alt=""></a></div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -35,7 +35,7 @@
     <div class="row">
       <div class="col">
         <div class="">
-          <h1 class="text-center">Create new account</h1>
+          <h1 class="text-center">Sign in</h1>
         </div>
         <!-- <form> -->
           <div class="form-group">
@@ -45,27 +45,15 @@
           </div>
           <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
+            <a class="float-right"href="#">Forgot password</a>
             <input (keyup)="valueHandler()" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
           </div>
-          <div class="form-group">
-            <label for="exampleInputName1">Firstname</label>
-            <input (keyup)="valueHandler()" type="name" class="form-control" id="exampleInputFirstname1" placeholder="Name">
-          </div>
-          <div class="form-group">
-            <label for="exampleInputLastname1">Lastname</label>
-            <input (keyup)="valueHandler()" type="lastname" class="form-control" id="exampleInputLastname1" placeholder="Lastname">
-          </div>
-          <div class="form-check my-3">
-            <input type="checkbox" class="form-check-input" id="agree">
-            <label class="form-check-label" for="agree"><a href="#">I agree with terms and conditions</a></label>
-          </div>
           <div class="">
-            <button (click)="register()" type="" class="btn btn-grey">Create</button>
+            <a (click)="login()" href="#" class="btn btn-blue"> Sign in</a>
           </div>
-
         <!-- </form> -->
         <div class="">
-          <p class="my-5">Already have an account?<a href="#">Sign in</a><p>
+          <p class="my-5">Don't have an account? <a routerLink="/register">Create new account</a><p>
         </div>
       </div>
     </div>

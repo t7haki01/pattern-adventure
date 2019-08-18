@@ -1,13 +1,15 @@
 import decode from 'jwt-decode';
-// import axios from 'axios';
+import axios from 'axios';
+
 export default class AuthHandler {
-  login = (account, password) => {
+  login (email, password) {
+    console.log("authHandler, login called");
     // Get a token from api server using the fetch api
     //Intead of axios, fetch has been used for experiencing difference betweem axios
     return this.fetch('http://localhost:7000/login', {
       method: 'POST',
       body: JSON.stringify({
-        account,
+        email,
         password
       })
     }).then(res => {
@@ -18,7 +20,20 @@ export default class AuthHandler {
         return Promise.resolve(res);
     });
   };
-  loggedIn = () => {
+
+  loginAxios (email, password) {
+
+    axios.post('http://localhost:7000/login', {email, password})
+    .then(res => {
+        if(res.status){
+            this.setToken(res.token); // Save the token in localStorage
+        }
+        console.log(Promise.resolve(res));
+        return Promise.resolve(res);
+    });
+  };
+
+  loggedIn () {
     // Checks if there is a saved token and it's still valid
     const token = this.getToken(); // Getting token from localstorage
 
@@ -29,7 +44,7 @@ export default class AuthHandler {
     return !!token && !this.isTokenExpired(token); // checking token expired or not and is there token or not
   };
 
-  tokenCheck = () =>{
+  tokenCheck () {
     const id_token = localStorage.getItem('id_token');
     if(id_token === "undefined" || id_token === null){
       return false;
@@ -39,7 +54,7 @@ export default class AuthHandler {
     }
   };
 
-  isTokenExpired = token => {
+  isTokenExpired (token){
     try {
       const decoded = decode(token);
       // Checking if token is expired.
@@ -52,34 +67,33 @@ export default class AuthHandler {
     }
   };
 
-  setToken = idToken => {
+  setToken (idToken)  {
         // Saves user token to localStorage
         localStorage.setItem('id_token', idToken);
   };
-  logout = () => {
+  logout () {
     // Clear user token and profile data from localStorage
     localStorage.removeItem('id_token');
-    localStorage.removeItem('sec');
+    try{
+      localStorage.removeItem('sec');
+    }
+    catch(err){
+      console.log(err);
+    }
   };
 
-    getToken = () => {
+    getToken (){
         // Retrieves the user token from localStorage
         return localStorage.getItem('id_token');
     };
 
-    logout = () => {
-        console.log("AuthaHandler, logout");
-        // Clear user token and profile data from localStorage
-        localStorage.removeItem('id_token');
-    };
-
-    getData = () => {
+    getData(){
         /* Get payload information in frontside with using jwt-decode*/
         const data = decode(this.getToken());
         return data;
     };
 
-    isAdmin = () => {
+    isAdmin(){
         const data = this.getData();
         if (data.isAdmin) {
             return true;
@@ -88,7 +102,7 @@ export default class AuthHandler {
         }
     };
 
-    whenExpired = () => {
+    whenExpired(){
         const now = Date.now() / 1000;
         const exp = this.getData().exp - now;
         return exp;
@@ -96,7 +110,7 @@ export default class AuthHandler {
 
     //Here is for the experiencing fetch
     //there is also solution with axios post methods in own private extra javascript files
-    fetch = (url, options) => {
+    fetch(url, options){
         // performs api calls sending the required authentication headers
         const headers = {
             Accept: 'application/json',
@@ -118,7 +132,7 @@ export default class AuthHandler {
         .then(response => response.json());
     };
 
-    _checkStatus = response => {
+    _checkStatus(response){
         // raises an error in case response status is not a success
         if (response.status >= 200 && response.status < 300) {
             // Success status lies between 200 to 300

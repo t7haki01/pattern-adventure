@@ -1,5 +1,5 @@
 var db = require('../config/db.js');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const saltRounds = 10;
 var today = new Date();
 
@@ -10,10 +10,10 @@ var account = {
   getAccountById: function(account_id, callback) {
     return db.query('select * from account where id=?', [account_id], callback);
   },
-  getIdByAccount: function(account, callback) {
+  getIdByEmail: function(email, callback) {
     return db.query(
-      'select id from account where account=?',
-      [account],
+      'select id from account where email=?',
+      [email],
       callback
     );
   },

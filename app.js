@@ -5,10 +5,9 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 const port = require('./config/setting.json').port;
-// var login = require('./login');
-
-// var users = require('./routes/user');
+var login = require('./login');
 var accounts = require('./routes/account');
+
 var app = express();
 
 app.use(cors());
@@ -17,16 +16,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-// app.use('/login', login);
-// app.use('/users', users);
+app.use('/login', login);
 app.use('/accounts', accounts);
 
 // the __dirname is the current directory from where the script is running
+// In here with reactjs
 // app.use(express.static(__dirname));
-// app.use(express.static(path.join(__dirname, 'pattern-adventure/build')));
+// app.use(express.static(path.join(__dirname, 'pattern-in-react/build')));
 
 // app.get('/*', function (req, res) {
-//   res.sendFile(path.join(__dirname, 'pattern-adventure/build', 'index.html'));
+//   res.sendFile(path.join(__dirname, 'pattern-adventure-in-react/build', 'index.html'));
 // });
 
 app.use(express.static(path.join(__dirname, 'pattern-in-angular/dist/pattern-in-angular')));
